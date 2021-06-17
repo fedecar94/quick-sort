@@ -1,12 +1,12 @@
-def quick_sort(array: list) -> list:
+def quick_sort(array: list):
     if len(array) < 2:
-        return array
+        return
 
     pivot = array[0]
 
     lo = []
-    hi = []
     eq = [pivot]
+    hi = []
 
     for item in array[1:]:
         if item < pivot:
@@ -16,10 +16,20 @@ def quick_sort(array: list) -> list:
         else:
             eq.append(item)
 
-    lo = quick_sort(lo)
-    hi = quick_sort(hi)
+    quick_sort(lo)
+    quick_sort(hi)
 
-    return lo + eq + hi
+    size_lo = len(lo)
+    if size_lo:
+        array[:size_lo] = lo
+
+    size_eq = len(eq)
+    if size_eq:
+        array[size_lo: size_lo + size_eq] = eq
+
+    size_hi = len(hi)
+    if size_hi:
+        array[size_lo + size_eq:] = hi
 
 
 if __name__ == '__main__':
@@ -28,5 +38,5 @@ if __name__ == '__main__':
     randomlist = [random.randint(1, 30) for x in range(0, 10)]
 
     print(randomlist)
-    sorted_list = quick_sort(randomlist)
-    print(sorted_list)
+    quick_sort(randomlist)
+    print(randomlist)
